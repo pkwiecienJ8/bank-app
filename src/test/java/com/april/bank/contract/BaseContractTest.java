@@ -1,6 +1,5 @@
 package com.april.bank.contract;
 
-import com.april.bank.BankApplication;
 import com.april.bank.application.rest.AccountController;
 import com.april.bank.domain.Account;
 import com.april.bank.domain.repository.AccountRepository;
