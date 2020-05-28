@@ -32,19 +32,22 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public FindBalanceResponse find(long id) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Account with given id does not exist"));
-        return new FindBalanceResponse(account.getBalance());
+        return new FindBalanceResponse(findAccountById(id).getBalance());
     }
 
     @Override
     public void deposit(TransferMoneyRequest transferMoneyRequest) {
-        Account account = accountRepository.findById(transferMoneyRequest.getAccountId()).orElseThrow(() -> new ObjectNotFoundException("Account with given id does not exist"));
-        account.deposit(transferMoneyRequest.getAmount());
+        findAccountById(transferMoneyRequest.getAccountId()).deposit(transferMoneyRequest.getAmount());
     }
 
     @Override
     public void withdraw(TransferMoneyRequest transferMoneyRequest) {
-        Account account = accountRepository.findById(transferMoneyRequest.getAccountId()).orElseThrow(() -> new ObjectNotFoundException("Account with given id does not exist"));
-        account.withdraw(transferMoneyRequest.getAmount());
+        findAccountById(transferMoneyRequest.getAccountId()).withdraw(transferMoneyRequest.getAmount());
+    }
+
+    private Account findAccountById(Long id){
+        return accountRepository
+                .findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Account with given id does not exist"));
     }
 }

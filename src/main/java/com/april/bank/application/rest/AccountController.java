@@ -28,24 +28,31 @@ public class AccountController {
 
     @GetMapping("/accounts/{id}")
     public ResponseEntity<FindBalanceResponse> get(@PathVariable Long id) {
-        return ResponseEntity.ok(accountService.find(id));
+        return ResponseEntity
+                .ok(accountService.find(id));
     }
 
     @PostMapping("/accounts")
     public ResponseEntity<CreateAccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(createAccountRequest));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(accountService.createAccount(createAccountRequest));
     }
 
     @PutMapping("/deposit")
     public ResponseEntity deposit(@Valid @RequestBody TransferMoneyRequest transferMoneyRequest) {
         accountService.deposit(transferMoneyRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @PutMapping("/withdraw")
     public ResponseEntity withdraw(@Valid @RequestBody TransferMoneyRequest transferMoneyRequest) {
         accountService.withdraw(transferMoneyRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
 

@@ -19,12 +19,16 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(NotEnoughMoneyException.class)
     public final ResponseEntity<Object> handleNotEnoughMoneyException(NotEnoughMoneyException exception, WebRequest request){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public final ResponseEntity<Object> handleObjectNotFoundException(ObjectNotFoundException exception, WebRequest request){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        return ResponseEntity.
+                status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
     }
 
 }
