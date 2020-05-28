@@ -17,6 +17,8 @@ public class Account {
 
     private List<BigDecimal> balanceHistory;
 
+    private static final Object lock = new Object();
+
     public Account(long id, Person owner) {
         this.id = id;
         this.owner = owner;
@@ -41,21 +43,25 @@ public class Account {
     }
 
     public void deposit(BigDecimal depositValue){
-        synchronized (this){
+        synchronized (lock){
             this.balance = balance.add(depositValue);
             balanceHistory.add(depositValue);
         }
     }
 
     public void withdraw(BigDecimal withdrawValue){
-        if(balance.subtract(withdrawValue).compareTo(BigDecimal.ZERO) < 0){
+        if(isBalanceLessThanZero(withdrawValue)){
             throw new NotEnoughMoneyException("Not enough money to withdraw");
         }
 
-        synchronized (this){
+        synchronized (lock){
             this.balance = balance.subtract(withdrawValue);
             balanceHistory.add(withdrawValue.negate());
         }
+    }
+
+    private boolean isBalanceLessThanZero(BigDecimal withdrawValue){
+        return balance.subtract(withdrawValue).compareTo(BigDecimal.ZERO) < 0;
     }
 
     @Override
